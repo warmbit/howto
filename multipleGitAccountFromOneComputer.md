@@ -1,5 +1,21 @@
 # Setup multiple Git accounts from one computer
 
+## where github user info is stored?
+
+### remove credentials via Keychain Access
+
+Open "Keychain Access" app and delete githu credentials there.
+
+### command line
+
+```
+$ git credential-osxkeychain erase
+host=github.com
+protocol=https
+> [Press Return]
+```
+
+
 ## Add first github account
 
 ### generate the keys
