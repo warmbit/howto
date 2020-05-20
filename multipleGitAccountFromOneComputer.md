@@ -1,12 +1,14 @@
 # Setup multiple Git accounts from one computer
 
-## generate the keys
+## Add first github account
+
+### generate the keys
 
 ```
 $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
 
-## edit ~/.ssh/config
+### edit ~/.ssh/config
 
 ```
 Host *
@@ -15,27 +17,27 @@ Host *
   IdentityFile ~/.ssh/id_rsa
 ```
 
-## start the agent
+### start the agent
 
 ```
 $ eval "$(ssh-agent -s)"
 Agent pid 25068
 ```
 
-## add the key
+### add the key
 
 ```
 $ ssh-add -K ~/.ssh/id_rsa_warmbit
 ```
 
-## Add the key to Github settings->SSH keys
+### Add the key to Github settings->SSH keys
 
 Copy the key first, then paste the key to the settings
 ```
 $ pbcopy < ~/.ssh/id_rsa_warmbit.pub 
 ```
 
-## Testing
+### Testing
 
 ```
 $ ssh -T git@github.com
@@ -46,4 +48,35 @@ Warning: Permanently added 'github.com,140.82.112.4' (RSA) to the list of known 
 Hi warmbit! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
+## Modify first account
 
+### Try the following after modify .ssh/config
+
+```
+$ ssh-add -D
+All identities removed
+$ ssh-add id_rsa_warmbit
+Identity added: id_rsa_warmbit (warmbit@gmail.com)
+$ ssh -T git@github.com
+Hi warmbit! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+## Use either of them by config
+
+```
+$ git config --global user.name "warmbit" 
+$ git config --global user.email "warmbit@gmail.com"
+```
+
+## clone with ssh
+
+```
+git clone git@github.com:account1_name/repo_name.git
+```
+
+## modify .ssh/config with this
+
+```
+[remote "origin"]
+        url = git@github.com-account1_name:account1_name/repo_name.git
+```
